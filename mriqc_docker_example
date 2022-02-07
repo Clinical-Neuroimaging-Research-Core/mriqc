@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Here is the one-participant basic command:
+
+docker run -it --rm -v /path/to/rawdata:/data:ro -v /path/to/output/qc/folder:/out nipreps/mriqc:latest /data /out participant --participant_label SUBJECT_ID --session-id SESSION_NUM --no-sub
+
+
+# Now an example of a one-participant command:
+
+#define variables first
+
+study=nstb
+
+subject=7001
+
+session=01
+
+#change to quality control directory in derivatives directory
+
+cd /Volumes/Pegasus/$study/derivatives/qc
+
+#run MRIQC with docker command
+
+docker run -it --rm -v /Volumes/Pegasus/$study/rawdata:/data:ro -v /Volumes/Pegasus/$study/derivatives/qc:/out nipreps/mriqc:latest /data /out participant --participant_label $subject --session-id $session --no-sub
+
+
+# For a group analysis:
+
+docker run -it --rm -v /Volumes/Pegasus/$study/rawdata:/data:ro -v /Volumes/Pegasus/$study/derivatives/qc:/out nipreps/mriqc:latest /data /out group --no-sub
